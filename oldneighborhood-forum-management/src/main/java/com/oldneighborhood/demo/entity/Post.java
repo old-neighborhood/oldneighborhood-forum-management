@@ -28,6 +28,7 @@ public class Post implements Serializable{
 	private String p_ID;
 	@NonNull
 	private String p_content;
+	@NonNull
 	@Column(columnDefinition="timestamp not null default ''")
 	private String p_image;
 	@Column(columnDefinition="timestamp not null default now()", updatable = false)

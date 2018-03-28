@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oldneighborhood.demo.entity.Forum;
 import com.oldneighborhood.demo.entity.PageDto;
+import com.oldneighborhood.demo.entity.Post;
 import com.oldneighborhood.demo.service.ForumService;
 
 import net.sf.json.JSONObject;
@@ -78,12 +79,22 @@ public class ForumController {
 	
 	@RequestMapping(path= {"/newpost"})
 	public String newpost(@RequestBody Map<String, Object> reqMap) {
-		return "";
+		Post post = new Post(
+				reqMap.get("p_content").toString(), 
+				reqMap.get("p_image").toString(),
+				reqMap.get("f_ID").toString(), 
+				reqMap.get("user_ID").toString(), 
+				reqMap.get("user_type").toString());
+		return forumService.newpost(post) ? "\"result\":\"success\"" : "\"result\":\"error\"";
 	}
 	
 	@RequestMapping(path= {"/editpost"})
 	public String editpost(@RequestBody Map<String, Object> reqMap) {
-		return "";
+		Post post = new Post(
+				reqMap.get("p_content").toString(),
+				reqMap.get("p_image").toString()
+				);
+		return forumService.editpost(post) ? "\"result\":\"success\"" : "\"result\":\"error\"";
 	}
 	
 	@RequestMapping(path= {"/deletepost"})
