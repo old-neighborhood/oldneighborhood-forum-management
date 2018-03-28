@@ -40,8 +40,9 @@ public class Post implements Serializable{
 	private String user_ID;
 	@NonNull
 	private String user_type;
-	public Post(String p_content, String p_image) {
+	public Post(String p_ID, String p_content, String p_image) {
 		super();
+		this.p_ID = p_ID;
 		this.p_content = p_content;
 		this.p_image = p_image;
 	}

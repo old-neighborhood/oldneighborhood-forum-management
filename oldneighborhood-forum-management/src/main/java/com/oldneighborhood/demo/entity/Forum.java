@@ -49,13 +49,15 @@ public class Forum implements Serializable{
 	@NonNull
 	private String user_type;
 	/**
-	 * 用于修改时候.  
+	 * 用于修改时候. 
+	 * @param f_ID 
 	 * @param f_title
 	 * @param f_context
 	 * @param f_image
 	 */
-	public Forum(String f_title, String f_context, String f_image) {
+	public Forum(String f_ID, String f_title, String f_context, String f_image) {
 		super();
+		this.f_ID = f_ID;
 		this.f_title = f_title;
 		this.f_context = f_context;
 		this.f_image = f_image;

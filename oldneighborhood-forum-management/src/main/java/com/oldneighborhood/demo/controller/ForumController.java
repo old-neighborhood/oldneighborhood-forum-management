@@ -55,6 +55,7 @@ public class ForumController {
 	@RequestMapping(path= {"/editforum"})
 	public String editforum(@RequestBody Map<String, Object> reqMap) {
 		Forum forum = new Forum(
+				reqMap.get("f_ID").toString(),
 				reqMap.get("f_title").toString(), 
 				reqMap.get("f_context").toString(),
 				reqMap.get("f_image").toString());
@@ -91,6 +92,7 @@ public class ForumController {
 	@RequestMapping(path= {"/editpost"})
 	public String editpost(@RequestBody Map<String, Object> reqMap) {
 		Post post = new Post(
+				reqMap.get("p_ID").toString(),
 				reqMap.get("p_content").toString(),
 				reqMap.get("p_image").toString()
 				);
