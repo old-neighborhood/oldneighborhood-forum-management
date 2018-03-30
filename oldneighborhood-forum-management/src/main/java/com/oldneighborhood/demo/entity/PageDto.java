@@ -37,7 +37,7 @@ public class PageDto implements Serializable{
 		this.current_page = current_page;
 		this.page_size = page_size;
 		
-		this.sort_term = sort_term;//排序项
+		this.sort_term = sort_term;//排序项time/hot
 		
 		this.total_pages = (int) ((this.total_rows - 1) / this.page_size + 1);
 		this.offset_row = (this.current_page - 1) * this.page_size;

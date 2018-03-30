@@ -1,0 +1,5 @@
+1.Field 'f_content' doesn't have a default value
+	- 对于text字段，MySQL不允许有默认值。
+	- varchar允许有默认值
+2.order by 似乎不能注入，默认使用isStick des, x_date desc
+3.UUID.randomUUID().toString().replace("-", "")

@@ -2,8 +2,6 @@ package com.oldneighborhood.demo.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-
 import com.oldneighborhood.demo.entity.Forum;
 import com.oldneighborhood.demo.entity.PageDto;
 import com.oldneighborhood.demo.entity.Post;
@@ -12,7 +10,7 @@ public interface ForumService {
 	
 	public Long count();
 	
-	public Page<Forum> pageforum(PageDto pagedto);
+	public List<Forum> pageforum(PageDto pagedto);
 	
 	public Forum forumdetail(String f_ID);
 	

@@ -31,7 +31,7 @@ public class Forum implements Serializable{
 	@NonNull
 	private String f_title;
 	@NonNull
-	private String f_context;
+	private String f_content;
 	@NonNull
 	@Column(columnDefinition="varchar(500) not null default '//'")
 	private String f_image;
@@ -52,14 +52,14 @@ public class Forum implements Serializable{
 	 * 用于修改时候. 
 	 * @param f_ID 
 	 * @param f_title
-	 * @param f_context
+	 * @param f_content
 	 * @param f_image
 	 */
-	public Forum(String f_ID, String f_title, String f_context, String f_image) {
+	public Forum(String f_ID, String f_title, String f_content, String f_image) {
 		super();
 		this.f_ID = f_ID;
 		this.f_title = f_title;
-		this.f_context = f_context;
+		this.f_content = f_content;
 		this.f_image = f_image;
 	}
 

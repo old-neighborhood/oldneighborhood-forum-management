@@ -1,15 +1,16 @@
 package com.oldneighborhood.demo.service.impl;
 
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
+//import org.springframework.data.domain.Page;
+//import org.springframework.data.domain.PageRequest;
+//import org.springframework.data.domain.Pageable;
+//import org.springframework.data.domain.Sort;
+//import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,16 +36,14 @@ public class ForumServiceImpl implements ForumService{
 	}
 
 	@Override
-	public Page<Forum> pageforum(PageDto pagedto) {
-		//排序sort......
-		List<Sort.Order> orders = new ArrayList<Sort.Order>();
-		orders.add(new Sort.Order(Direction.DESC, "isSticky"));
-		orders.add(new Sort.Order(Direction.DESC, pagedto.getSort_term()));
-		Sort sort = new Sort(orders);
-		Pageable pageable = new PageRequest(
-				pagedto.getOffset_row(), pagedto.getPage_size(), sort);
-		
-		return forumDao.findAll(pageable);
+	public List<Forum> pageforum(PageDto pagedto) {
+		System.out.println(pagedto.toString());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>list by  "+pagedto.getSort_term());
+		if (pagedto.getSort_term().equals("hot")) {
+			return forumDao.listByHot(pagedto.getOffset_row(), pagedto.getPage_size());
+		}else {
+			return forumDao.listByDate(pagedto.getOffset_row(), pagedto.getPage_size());
+		}
 	}
 
 	@Override
@@ -63,6 +62,10 @@ public class ForumServiceImpl implements ForumService{
 	@Override
 	@Transactional
 	public boolean newforum(Forum forum) {
+		forum.setF_ID(UUID.randomUUID().toString().replace("-", ""));
+		forum.setF_like(0);
+		forum.setF_view(0);
+		forum.setIsSticky(false);
 		boolean flag = false;
 		try {
 			forumDao.saveAndFlush(forum);
@@ -78,7 +81,7 @@ public class ForumServiceImpl implements ForumService{
 	public boolean editforum(Forum forum) {
 		boolean flag = false;
 		try {
-			forumDao.editforum(forum.getF_title(), forum.getF_context(), 
+			forumDao.editforum(forum.getF_title(), forum.getF_content(), 
 					forum.getF_image(), forum.getF_ID());
 			flag = true;
 		} catch (Exception e) {
@@ -130,6 +133,7 @@ public class ForumServiceImpl implements ForumService{
 	@Transactional
 	public boolean newpost(Post post) {
 		boolean flag = false;
+		post.setP_ID(UUID.randomUUID().toString().replace("-", ""));
 		try {
 			postDao.save(post); 
 			flag = true;

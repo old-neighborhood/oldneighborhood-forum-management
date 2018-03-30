@@ -1,9 +1,9 @@
 package com.oldneighborhood.demo.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +13,7 @@ import com.oldneighborhood.demo.entity.PageDto;
 import com.oldneighborhood.demo.entity.Post;
 import com.oldneighborhood.demo.service.ForumService;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @RestController
@@ -29,9 +30,10 @@ public class ForumController {
 				Integer.parseInt(reqMap.get("current_page").toString()), 
 				Integer.parseInt(reqMap.get("page_size").toString()), 
 				reqMap.get("sort_term").toString());
-		Page<Forum> page = forumService.pageforum(pagedto);
-		JSONObject json = JSONObject.fromObject(page);
-		return json.get("content").toString();
+		List<Forum> page = forumService.pageforum(pagedto);
+		JSONArray json = JSONArray.fromObject(page);
+		System.out.println(json);
+		return json.toString();
 	}
 	
 	@RequestMapping(path= {"/formdetail"})
@@ -45,7 +47,7 @@ public class ForumController {
 	public String newforum(@RequestBody Map<String, Object> reqMap) {
 		Forum forum = new Forum(
 				reqMap.get("f_title").toString(), 
-				reqMap.get("f_context").toString(),
+				reqMap.get("f_content").toString(),
 				reqMap.get("f_image").toString(),
 				reqMap.get("user_ID").toString(),
 				reqMap.get("user_type").toString());
@@ -57,7 +59,7 @@ public class ForumController {
 		Forum forum = new Forum(
 				reqMap.get("f_ID").toString(),
 				reqMap.get("f_title").toString(), 
-				reqMap.get("f_context").toString(),
+				reqMap.get("f_content").toString(),
 				reqMap.get("f_image").toString());
 		return forumService.editforum(forum) ? "\"result\":\"success\"" : "\"result\":\"error\"";
 	}
