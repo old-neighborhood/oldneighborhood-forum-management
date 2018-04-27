@@ -2,6 +2,7 @@ package com.oldneighborhood.demo.service;
 
 import java.util.List;
 
+import com.oldneighborhood.demo.entity.Collect;
 import com.oldneighborhood.demo.entity.Forum;
 import com.oldneighborhood.demo.entity.PageDto;
 import com.oldneighborhood.demo.entity.Post;
@@ -9,6 +10,8 @@ import com.oldneighborhood.demo.entity.Post;
 public interface ForumService {
 	
 	public Long count();
+	
+	public Long countPost(String f_ID);
 	
 	public List<Forum> pageforum(PageDto pagedto);
 	
@@ -33,4 +36,11 @@ public interface ForumService {
 	
 	public boolean deletepost(String p_ID);
 
+	public int totalCollect(String f_ID);
+	
+	public boolean isCollect(String userID, String userType, String f_ID);
+
+	public boolean newCollect(Collect collect);
+	
+	public boolean deleteCollect(Collect collect);
 }

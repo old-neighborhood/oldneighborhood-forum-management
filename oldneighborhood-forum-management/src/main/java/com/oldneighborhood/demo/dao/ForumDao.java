@@ -19,8 +19,8 @@ public interface ForumDao extends JpaRepository<Forum, String>{
 	public List<Forum> listByHot(int offset_row, int page_size);
 	
 	@Modifying
-	@Query(value = "update forum set f_title=?, f_content=?, f_image=? where f_ID=? ", nativeQuery = true)
-	public void editforum(String f_title, String f_context, String f_image, String f_ID);
+	@Query(value = "update forum set f_title=?, f_content=?, f_image=?, f_view=? where f_ID=? ", nativeQuery = true)
+	public void editforum(String f_title, String f_context, String f_image,Integer f_view, String f_ID);
 	
 	@Modifying
 	@Query(value = "update forum set isSticky = 1 where f_ID=? ", nativeQuery = true)

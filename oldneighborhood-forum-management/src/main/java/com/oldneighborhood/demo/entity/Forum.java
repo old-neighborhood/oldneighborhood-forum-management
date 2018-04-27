@@ -62,5 +62,24 @@ public class Forum implements Serializable{
 		this.f_content = f_content;
 		this.f_image = f_image;
 	}
+	  
+	    /**  
+	     * 创建一个新的实例 Forum.  
+	     *  
+	     * @param f_ID
+	     * @param f_title
+	     * @param f_content
+	     * @param f_image
+	     * @param f_view  
+	     */  
+	    
+	public Forum(String f_ID, String f_title, String f_content, String f_image, Integer f_view) {
+		super();
+		this.f_ID = f_ID;
+		this.f_title = f_title;
+		this.f_content = f_content;
+		this.f_image = f_image;
+		this.f_view = f_view;
+	}
 
 }

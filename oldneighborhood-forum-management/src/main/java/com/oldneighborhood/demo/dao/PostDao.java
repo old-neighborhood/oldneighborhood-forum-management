@@ -10,11 +10,15 @@ import com.oldneighborhood.demo.entity.Post;
 
 public interface PostDao extends JpaRepository<Post, String>{
 	
-	@Query(value = "select * from post order by p_date desc limit ?, ? where f_ID=? ", nativeQuery = true)
-	public List<Post> listByPage(int offset_row, int page_size, String forum_ID);
+	@Query(value = "select * from post where f_ID=? order by p_date asc limit ?, ? ", nativeQuery = true)
+	public List<Post> listByPage( String forum_ID,int offset_row, int page_size);
 	
 	@Modifying
 	@Query(value = "update post set p_content = ?, p_image = ? where p_ID = ? ", nativeQuery = true)
 	public void editpost(String p_content, String p_image, String p_ID);
+
+	@Query(value = "select count(1) from post where f_ID=?", nativeQuery = true)
+	public Long countPost(String f_ID);
+
 
 }

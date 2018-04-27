@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.oldneighborhood.demo.dao.CollectDao;
 import com.oldneighborhood.demo.dao.ForumDao;
 import com.oldneighborhood.demo.dao.PostDao;
+import com.oldneighborhood.demo.entity.Collect;
 import com.oldneighborhood.demo.entity.Forum;
 import com.oldneighborhood.demo.entity.PageDto;
 import com.oldneighborhood.demo.entity.Post;
@@ -30,11 +32,18 @@ public class ForumServiceImpl implements ForumService{
 	@Autowired
 	private PostDao postDao;
 
+	@Autowired
+	private CollectDao collectDao;
 	@Override
 	public Long count() {
 		return forumDao.count();
 	}
 
+	@Override
+	public Long countPost(String f_ID) {
+		return postDao.countPost(f_ID);
+	}
+	
 	@Override
 	public List<Forum> pageforum(PageDto pagedto) {
 		System.out.println(pagedto.toString());
@@ -56,7 +65,7 @@ public class ForumServiceImpl implements ForumService{
 	 */
 	@Override
 	public List<Post> listpost(PageDto page, String f_ID) {
-		return postDao.listByPage(page.getOffset_row(), page.getPage_size(), f_ID);
+		return postDao.listByPage( f_ID,page.getOffset_row(), page.getPage_size());
 	}
 	
 	@Override
@@ -82,7 +91,7 @@ public class ForumServiceImpl implements ForumService{
 		boolean flag = false;
 		try {
 			forumDao.editforum(forum.getF_title(), forum.getF_content(), 
-					forum.getF_image(), forum.getF_ID());
+					forum.getF_image(),forum.getF_view(), forum.getF_ID());
 			flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -129,6 +138,7 @@ public class ForumServiceImpl implements ForumService{
 		return flag;
 	}
 
+	
 	@Override
 	@Transactional
 	public boolean newpost(Post post) {
@@ -163,6 +173,41 @@ public class ForumServiceImpl implements ForumService{
 		boolean flag = false;
 		try {
 			postDao.delete(postDao.findOne(p_ID));
+			flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
+
+	@Override
+	public int totalCollect(String f_ID) {
+		return collectDao.count(f_ID);
+	}
+
+	@Override
+	public boolean isCollect(String userID, String userType, String f_ID) {
+		
+		return collectDao.findCollect(userID, userType, f_ID)!=0?true:false;
+	}
+
+	@Override
+	public boolean newCollect(Collect collect) {
+		boolean flag = false;
+		try {
+			collectDao.insert(collect.getUserID(),collect.getUserType(),collect.getF_ID());
+			flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
+
+	@Override
+	public boolean deleteCollect(Collect collect) {
+		boolean flag = false;
+		try {
+			collectDao.deleteCollect(collect.getUserID(),collect.getF_ID()); 
 			flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
